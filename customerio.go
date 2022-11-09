@@ -36,6 +36,21 @@ func (e *CustomerIOError) Error() string {
 	return fmt.Sprintf("%v: %v %v", e.status, e.url, string(e.body))
 }
 
+// Status returns the HTTP status code returned by the server for the request
+func (e *CustomerIOError) Status() int {
+	return e.status
+}
+
+// URL returns the HTTP URL that the request was made to.
+func (e *CustomerIOError) URL() string {
+	return e.url
+}
+
+// Body returns the servers response to the request.
+func (e *CustomerIOError) Body() []byte {
+	return e.body
+}
+
 // ParamError is an error returned if a parameter to the track API is invalid.
 type ParamError struct {
 	Param string // Param is the name of the parameter.
