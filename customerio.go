@@ -27,28 +27,13 @@ type CustomerIO struct {
 
 // CustomerIOError is returned by any method that fails at the API level
 type CustomerIOError struct {
-	status int
-	url    string
-	body   []byte
+	Status int
+	URL    string
+	Body   []byte
 }
 
 func (e *CustomerIOError) Error() string {
-	return fmt.Sprintf("%v: %v %v", e.status, e.url, string(e.body))
-}
-
-// Status returns the HTTP status code returned by the server for the request
-func (e *CustomerIOError) Status() int {
-	return e.status
-}
-
-// URL returns the HTTP URL that the request was made to.
-func (e *CustomerIOError) URL() string {
-	return e.url
-}
-
-// Body returns the servers response to the request.
-func (e *CustomerIOError) Body() []byte {
-	return e.body
+	return fmt.Sprintf("%v: %v %v", e.Status, e.URL, string(e.Body))
 }
 
 // ParamError is an error returned if a parameter to the track API is invalid.
@@ -254,9 +239,9 @@ func (c *CustomerIO) request(ctx context.Context, method, url string, body inter
 
 	if resp.StatusCode != http.StatusOK {
 		return &CustomerIOError{
-			status: resp.StatusCode,
-			url:    url,
-			body:   responseBody,
+			Status: resp.StatusCode,
+			URL:    url,
+			Body:   responseBody,
 		}
 	}
 
